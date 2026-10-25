@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0d0b">
+  <title>MoneyMode | Your Money, Your Future</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: #0b0d0b;
+      color: #f3f5ef;
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+    }
+    :root {
+      --green: #c5f27c;
+      --panel: #151815;
+      --muted: #a2aa9d;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 7%;
+      border-bottom: 1px solid #292e28;
+    }
+    .brand {
+      color: var(--green);
+      font-size: 21px;
+      font-weight: bold;
+    }
+    nav a {
+      color: #d7dbd2;
+      text-decoration: none;
+      margin-left: 12px;
+      font-size: 13px;
+    }
+    .hero {
+      padding: 85px 8%;
+      background: radial-gradient(ellipse at 85% 20%, #34432666, transparent 55%);
+    }
+    .tag {
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 12px;
+    }
+    h1 {
+      font-size: clamp(44px, 9vw, 76px);
+      line-height: 1.1;
+      letter-spacing: -2px;
+      margin: 22px 0;
+    }
+    h1 span { color: var(--green); }
+    p { color: var(--muted); }
+    .hero p { max-width: 500px; }
+    .button {
+      display: inline-block;
+      background: var(--green);
+      color: #11160d;
+      padding: 12px 18px;
+      border-radius: 7px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    section { padding: 55px 8%; }
+    h2 { font-size: 32px; line-height: 1.2; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid #292e28;
+      border-radius: 12px;
+      padding: 23px;
+    }
+    .card h3 { color: var(--green); }
+    .card p { font-size: 14px; }
+    .quote {
+      border-left: 3px solid var(--green);
+      padding: 8px 20px;
+      font-size: 24px;
+    }
+    footer {
+      padding: 25px 8%;
+      border-top: 1px solid #292e28;
+      font-size: 12px;
+      text-align: center;
+    }
+    @media (max-width: 480px) {
+      nav { padding: 16px 5%; }
+      nav a { margin-left: 7px; font-size: 11px; }
+      .hero { padding: 65px 6%; }
+      section { padding: 40px 6%; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="brand">MoneyMode.</div>
+    <div>
+      <a href="#learn">Learn</a>
+      <a href="#goals">Goals</a>
+      <a href="#about">About</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="tag">Your money journey starts here</div>
+    <h1>Money smart.<br><span>Future ready.</span></h1>
+    <p>
+      Learn to manage money, build healthy saving habits
+      and make thoughtful financial decisions.
+      Your journey to financial literacy starts here.
+    </p>
+    <a class="button" href="#learn">Explore Money School ↘</a>
+  </header>
+
+  <section id="learn">
+    <div class="tag">01 / Money school</div>
+    <h2>Understand money. Build confidence.</h2>
+    <p>Start with simple lessons and practical everyday skills.</p>
+    <div class="grid">
+      <article class="card">
+        <h3>💸 Budgeting</h3>
+        <p>Learn to plan your money, understand expenses
+        and decide what you can afford.</p>
+      </article>
+      <article class="card">
+        <h3>🌱 Saving</h3>
+        <p>Discover how small, regular contributions can
+        help you work toward future goals.</p>
+      </article>
+      <article class="card">
+        <h3>🛡️ Money safety</h3>
+        <p>Protect your PINs and OTPs, spot scams
+        and be careful with promises of easy money.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="goals">
+    <div class="tag">02 / Your future</div>
+    <h2>Small steps. Better habits.</h2>
+    <p class="quote">
+      "Build knowledge first. Make money decisions with care."
+    </p>
+  </section>
+
+  <section id="about">
+    <div class="tag">03 / About MoneyMode</div>
+    <h2>Money education for everyone.</h2>
+    <p>
+      MoneyMode is a beginner-friendly educational project
+      designed to make financial concepts easier to understand.
+      Learn at your own pace, ask questions and keep improving.
+    </p>
+    <p>
+      This website provides general education, not personal
+      financial advice or investment recommendations.
+    </p>
+  </section>
+
+  <footer>
+    <div class="brand">MoneyMode.</div>
+    <p>Learn about money. Build habits for life.</p>
+    <p>© <span id="year"></span> MoneyMode · Educational project</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
+</body>
+  </html>
+  
