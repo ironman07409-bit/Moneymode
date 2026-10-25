@@ -169,22 +169,206 @@
   </section>
 
  
-<section id="budget-tool" style="padding:28px 18px;margin:20px 0;background:#121914;border:1px solid #31533b;border-radius:18px;color:#f3f5ef;">
-  <div style="color:#c5f27c;font-size:13px;letter-spacing:2px;">04 / MONEY TOOL</div>
-  <h2 style="font-size:28px;margin:8px 0;">Your monthly budget</h2>
-  <p style="color:#b8c2b8;">Give your money a plan. Enter your monthly amounts below.</p>
+<style>
+#budget-tool {
+  --lime: #c5f27c;
+  --panel: #121713;
+  --muted: #98a49a;
+  margin: 32px 0;
+  padding: 22px;
+  color: #f4f7f2;
+  background: radial-gradient(ellipse at top right,#203126 0%,#101411 55%,#0b0d0b 100%);
+  border: 1px solid #344638;
+  border-radius: 24px;
+  font-family: Arial,sans-serif;
+  box-shadow: 0 20px 60px #0005;
+}
+#budget-tool * { box-sizing: border-box; }
+#budget-tool .bm-tag {
+  color: var(--lime); font-size: 11px; letter-spacing: 3px;
+  font-weight: 800;
+}
+#budget-tool h2 {
+  font-size: clamp(28px,7vw,38px); letter-spacing: -1.5px;
+  margin: 12px 0 8px; line-height: 1.1;
+}
+#budget-tool .bm-muted { color: var(--muted); font-size: 14px; line-height: 1.6; }
+#budget-tool .bm-hero {
+  padding: 22px; border-radius: 20px;
+  background: linear-gradient(135deg,#26382a,#141b16);
+  border: 1px solid #3c5140; margin: 22px 0;
+}
+#budget-tool .bm-label { font-size: 12px; color: #b6c3b7; display:block; margin-bottom: 9px; }
+#budget-tool .bm-amount {
+  display:flex; align-items:center; gap:8px;
+  font-size: clamp(30px,8vw,42px); font-weight: 800;
+  letter-spacing:-1px; color:var(--lime); overflow-wrap:anywhere;
+}
+#budget-tool .bm-amount span { font-size: 17px; }
+#budget-tool .bm-grid { display:grid; grid-template-columns:1fr 1fr; gap:11px; }
+#budget-tool .bm-card {
+  padding:15px; border-radius:16px; background:#171d19;
+  border:1px solid #29362c; min-width:0;
+}
+#budget-tool .bm-card .bm-value {
+  font-size:21px; font-weight:750; margin-top:8px; overflow-wrap:anywhere;
+}
+#budget-tool .bm-dot { display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px; }
+#budget-tool .bm-field { margin:20px 0; }
+#budget-tool .bm-field label { display:flex;justify-content:space-between;gap:10px; font-size:13px;margin-bottom:9px; }
+#budget-tool .bm-field input {
+  display:block; width:100%; min-width:0; padding:14px;
+  border:1px solid #354339; border-radius:12px;
+  background:#0c100d; color:#f5f7f4; font-size:16px;
+  outline:none;
+}
+#budget-tool .bm-field input:focus { border-color:var(--lime); }
+#budget-tool .bm-btn {
+  width:100%; padding:15px; border:0; border-radius:13px;
+  background:var(--lime); color:#10160d; font-weight:800;
+  font-size:15px; cursor:pointer; margin-top:8px;
+}
+#budget-tool .bm-secondary {
+  background:#202820; color:#e9f1e6; border:1px solid #39483b;
+  margin-top:10px;
+}
+#budget-tool .bm-track { height:8px; background:#303a32; border-radius:20px; overflow:hidden; margin:12px 0 8px; }
+#budget-tool .bm-fill { height:100%; width:0; background:var(--lime); border-radius:20px; transition:width .3s; }
+#budget-tool .bm-row { display:flex;justify-content:space-between;gap:12px;font-size:13px; margin-top:17px; }
+#budget-tool .bm-row strong { text-align:right; overflow-wrap:anywhere; }
+#budget-tool .bm-note { font-size:11px; color:#859187; line-height:1.6; margin-top:18px; }
+#budget-tool .bm-status { margin-top:16px;padding:13px;border-radius:12px;background:#202820;font-size:13px;line-height:1.6; }
+@media(min-width:600px) {
+  #budget-tool { padding:32px; }
+  #budget-tool .bm-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+}
+</style>
 
-  <label for="mm-income">Monthly income (₹)</label>
-  <input id="mm-income" type="number" min="0" placeholder="e.g. 15000" style="display:block;width:100%;padding:13px;margin:8px 0 16px;border-radius:10px;border:1px solid #405345;background:#0b0d0b;color:white;font-size:16px;">
+<section id="budget-tool">
+  <div class="bm-tag">MONEYMODE / SMART MONEY TOOLS</div>
+  <h2>Make your money<br>make sense.</h2>
+  <p class="bm-muted">A smarter monthly budget starts with a plan. Set your numbers and see the full picture.</p>
 
-  <label for="mm-expenses">Monthly expenses (₹)</label>
-  <input id="mm-expenses" type="number" min="0" placeholder="e.g. 9000" style="display:block;width:100%;padding:13px;margin:8px 0 16px;border-radius:10px;border:1px solid #405345;background:#0b0d0b;color:white;font-size:16px;">
+  <div class="bm-hero">
+    <span class="bm-label">MONEY LEFT AFTER YOUR PLAN</span>
+    <div class="bm-amount"><span>₹</span><span id="bm-left">0</span></div>
+    <div class="bm-muted" id="bm-subtitle">Enter your monthly income to get started.</div>
+  </div>
 
-  <button type="button" onclick="(function(){var i=Math.max(0,Number(document.getElementById('mm-income').value)||0);var e=Math.max(0,Number(document.getElementById('mm-expenses').value)||0);var r=document.getElementById('mm-result');r.style.display='block';r.innerHTML='Money left: ₹'+(i-e).toLocaleString('en-IN')+'<br><small>'+(i===0?'Enter your income to see your budget.':e>i?'Your expenses exceed your income. Review your spending.':'You have used '+Math.round(e/i*100)+'% of your income.')+'</small>';})()" style="width:100%;padding:14px;border:0;border-radius:10px;background:#c5f27c;color:#101810;font-weight:bold;font-size:16px;">Calculate my budget</button>
+  <div class="bm-grid">
+    <div class="bm-card">
+      <div class="bm-muted"><span class="bm-dot" style="background:#78b9ff"></span>Income</div>
+      <div class="bm-value" id="bm-income-card">₹0</div>
+    </div>
+    <div class="bm-card">
+      <div class="bm-muted"><span class="bm-dot" style="background:#ffb86b"></span>Needs</div>
+      <div class="bm-value" id="bm-needs-card">₹0</div>
+    </div>
+    <div class="bm-card">
+      <div class="bm-muted"><span class="bm-dot" style="background:#d5a4ff"></span>Wants</div>
+      <div class="bm-value" id="bm-wants-card">₹0</div>
+    </div>
+    <div class="bm-card">
+      <div class="bm-muted"><span class="bm-dot" style="background:#c5f27c"></span>Savings</div>
+      <div class="bm-value" id="bm-savings-card">₹0</div>
+    </div>
+  </div>
 
-  <div id="mm-result" aria-live="polite" style="display:none;margin-top:18px;padding:16px;background:#202b21;border-radius:12px;line-height:1.8;"></div>
-  <p style="font-size:12px;color:#a9b4a9;margin-top:18px;">Learning tool only — not financial advice. Your entries are calculated in this browser and aren't saved by this tool.</p>
+  <div style="margin-top:28px">
+    <div class="bm-tag">01 / YOUR NUMBERS</div>
+
+    <div class="bm-field">
+      <label for="bm-income">Monthly income <span>₹ INR</span></label>
+      <input id="bm-income" type="number" min="0" step="any" inputmode="decimal" placeholder="e.g. 20000">
+    </div>
+    <div class="bm-field">
+      <label for="bm-needs">Essential needs <span>₹ INR</span></label>
+      <input id="bm-needs" type="number" min="0" step="any" inputmode="decimal" placeholder="Rent, food, travel">
+    </div>
+    <div class="bm-field">
+      <label for="bm-wants">Wants & lifestyle <span>₹ INR</span></label>
+      <input id="bm-wants" type="number" min="0" step="any" inputmode="decimal" placeholder="Shopping, outings">
+    </div>
+    <div class="bm-field">
+      <label for="bm-save">Planned savings <span>₹ INR</span></label>
+      <input id="bm-save" type="number" min="0" step="any" inputmode="decimal" placeholder="Your savings goal">
+    </div>
+
+    <button type="button" class="bm-btn" id="bm-calculate">Analyse my budget ↗</button>
+    <button type="button" class="bm-btn bm-secondary" id="bm-reset">Reset numbers</button>
+  </div>
+
+  <div style="margin-top:30px">
+    <div class="bm-tag">02 / YOUR BREAKDOWN</div>
+    <div class="bm-row"><span>Needs / income</span><strong id="bm-needs-pct">—</strong></div>
+    <div class="bm-track"><div class="bm-fill" id="bm-needs-bar" style="background:#78b9ff"></div></div>
+    <div class="bm-row"><span>Wants / income</span><strong id="bm-wants-pct">—</strong></div>
+    <div class="bm-track"><div class="bm-fill" id="bm-wants-bar" style="background:#d5a4ff"></div></div>
+    <div class="bm-row"><span>Savings rate</span><strong id="bm-save-pct">—</strong></div>
+    <div class="bm-track"><div class="bm-fill" id="bm-save-bar"></div></div>
+    <div class="bm-row"><span>Total planned</span><strong id="bm-total">₹0</strong></div>
+    <div class="bm-row"><span>Budget balance</span><strong id="bm-balance">₹0</strong></div>
+    <div class="bm-status" id="bm-status" aria-live="polite">Your budget insights will appear here after you analyse your numbers.</div>
+  </div>
+
+  <p class="bm-note">Your privacy matters: this calculator does not save your entries or send them to a server. Refreshing the page clears the numbers. For financial education only, not financial advice.</p>
 </section>
+
+<script>
+(function () {
+  const ids = ["income","needs","wants","save"];
+  const el = id => document.getElementById("bm-" + id);
+  const money = n => Math.round(n).toLocaleString("en-IN");
+  const val = id => Math.max(0, Number(el(id).value) || 0);
+
+  function analyse() {
+    const income = val("income");
+    const needs = val("needs");
+    const wants = val("wants");
+    const save = val("save");
+    const total = needs + wants + save;
+    const balance = income - total;
+
+    el("left").textContent = money(balance);
+    el("income-card").textContent = "₹" + money(income);
+    el("needs-card").textContent = "₹" + money(needs);
+    el("wants-card").textContent = "₹" + money(wants);
+    el("savings-card").textContent = "₹" + money(save);
+    el("total").textContent = "₹" + money(total);
+    el("balance").textContent = "₹" + money(balance);
+    el("subtitle").textContent = income ? "Here is how your monthly plan adds up." : "Enter your monthly income to get started.";
+
+    const pct = n => income ? n / income * 100 : 0;
+    [["needs",needs],["wants",wants],["save",save]].forEach(([key,n]) => {
+      const p = pct(n);
+      const label = key === "save" ? "save-pct" : key + "-pct";
+      const bar = key === "save" ? "save-bar" : key + "-bar";
+      el(label).textContent = income ? p.toFixed(1) + "%" : "—";
+      el(bar).style.width = Math.min(100,p) + "%";
+    });
+
+    const status = el("status");
+    if (!income) {
+      status.textContent = "Add your monthly income to see meaningful budget insights.";
+    } else if (total > income) {
+      status.textContent = "⚠️ Your plan is ₹" + money(total-income) + " over your income. Review the amounts and adjust your plan.";
+    } else if (balance === 0) {
+      status.textContent = "Your whole income is allocated. Check that your plan leaves enough flexibility for unexpected costs.";
+    } else {
+      status.textContent = "✓ Your plan has ₹" + money(balance) + " unallocated. You can assign it to a goal, keep it as a buffer, or adjust your categories.";
+    }
+  }
+
+  el("calculate").addEventListener("click", analyse);
+  ids.forEach(id => el(id).addEventListener("input", analyse));
+  el("reset").addEventListener("click", function () {
+    ids.forEach(id => el(id).value = "");
+    analyse();
+  });
+  analyse();
+})();
+  </script>
+  
   
   <footer>
     <div class="brand">MoneyMode.</div>
